@@ -15,24 +15,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-
-      - name: Fix flutter SDK folder permission
-        run: git config --global --add safe.directory /tmp/flutter
-
-      - name: Test connection
-        run: curl "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.0'
 
-      - name: Get dependencies
+      - name: Run flutter pub get
         run: flutter pub get
 
       - name: Build APK
@@ -43,4 +37,3 @@ jobs:
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
-          
